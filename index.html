@@ -144,7 +144,7 @@
     const Z_REDUCES_X_SAME_DIR_POS = 0.0683;  // X+/Z+
     const Z_REDUCES_X_SAME_DIR_NEG = 0.0104;  // X-/Z-
     const X_REDUCES_Z_PER_TNT = 0.0020;
-    const EXTRA_Y_DROP_PER_HZ_TNT = 0.00737;
+    const EXTRA_Y_DROP_PER_HZ_TNT = 0.00848;
 
     const Y_TARGET_OFFSET = 145;
     const PAYLOAD_X_OFFSET_BASE = 14;
@@ -158,9 +158,7 @@
     function runEngine(ox, oy, oz, mag, tx, ty, tz) {
         let px = ox - PAYLOAD_X_OFFSET_BASE + mag;
         let pz = oz + PAYLOAD_Z_OFFSET;
-        const horizontalDistance = Math.hypot(tx - px, tz - pz);
-        const dynamicPayloadYOffset = PAYLOAD_Y_OFFSET + (horizontalDistance / 1000) * 1.3;
-        let py = oy + dynamicPayloadYOffset;
+        let py = oy + PAYLOAD_Y_OFFSET;
         let adj_ty = ty + Y_TARGET_OFFSET;
         let dx = tx - px, dy = adj_ty - py, dz = tz - pz;
 
