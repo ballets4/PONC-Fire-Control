@@ -159,7 +159,7 @@
         let px = ox - PAYLOAD_X_OFFSET_BASE + mag;
         let pz = oz + PAYLOAD_Z_OFFSET;
         const horizontalDistance = Math.hypot(tx - px, tz - pz);
-        const dynamicPayloadYOffset = PAYLOAD_Y_OFFSET + (horizontalDistance / 1000) * 1.6;
+        const dynamicPayloadYOffset = PAYLOAD_Y_OFFSET + (horizontalDistance / 1000) * 1.3;
         let py = oy + dynamicPayloadYOffset;
         let adj_ty = ty + Y_TARGET_OFFSET;
         let dx = tx - px, dy = adj_ty - py, dz = tz - pz;
