@@ -157,8 +157,10 @@
 
     function runEngine(ox, oy, oz, mag, tx, ty, tz) {
         let px = ox - PAYLOAD_X_OFFSET_BASE + mag;
-        let py = oy + PAYLOAD_Y_OFFSET;
         let pz = oz + PAYLOAD_Z_OFFSET;
+        const horizontalDistance = Math.hypot(tx - px, tz - pz);
+        const dynamicPayloadYOffset = PAYLOAD_Y_OFFSET + (horizontalDistance / 1000) * 1.6;
+        let py = oy + dynamicPayloadYOffset;
         let adj_ty = ty + Y_TARGET_OFFSET;
         let dx = tx - px, dy = adj_ty - py, dz = tz - pz;
 
@@ -213,7 +215,7 @@
 
         let warningBanner = '';
         if (horizontalDistance < 100) {
-            warningBanner = `<div class="orange-banner">⚠️ TARGET TOO CLOSE (${horizontalDistance.toFixed(2)} BLOCKS)</div>`;
+            warningBanner = `<div class="orange-banner"> TARGET TOO CLOSE (${horizontalDistance.toFixed(2)} BLOCKS)</div>`;
         }
 
         document.getElementById('output-panel').innerHTML = `
