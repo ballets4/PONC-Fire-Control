@@ -143,10 +143,11 @@
     // Opposing quadrants (X+/Z- and X-/Z+) need no correction.
     const Z_REDUCES_X_SAME_DIR_POS = 0.0683;  // X+/Z+
     const Z_REDUCES_X_SAME_DIR_NEG = 0.0104;  // X-/Z-
-    const X_REDUCES_Z_PER_TNT = 0.0020;
+    const X_REDUCES_Z_WHEN_XPOS = 0.0020;
+    const X_REDUCES_Z_WHEN_XNEG = 0.000965;
     const EXTRA_Y_DROP_PER_HZ_TNT = 0.008;
 
-    const Y_TARGET_OFFSET = 142;
+    const Y_TARGET_OFFSET = 145;
     const PAYLOAD_X_OFFSET_BASE = 14;
     const PAYLOAD_Y_OFFSET = 6;
     const PAYLOAD_Z_OFFSET = -1;
@@ -174,7 +175,8 @@
 
         let a = x_mod[0];
         let b = z_mod[0] - copysign(z_red * DRAG_FACTOR, z_mod[0]);
-        let c = x_mod[2] - copysign(X_REDUCES_Z_PER_TNT * DRAG_FACTOR, x_mod[2]);
+        let x_reduces_z = dx >= 0 ? X_REDUCES_Z_WHEN_XPOS : X_REDUCES_Z_WHEN_XNEG;
+        let c = x_mod[2] - (x_reduces_z * DRAG_FACTOR);
         let d = z_mod[2];
         let det = a * d - b * c;
 
@@ -213,7 +215,7 @@
 
         let warningBanner = '';
         if (horizontalDistance < 100) {
-            warningBanner = `<div class="orange-banner"> TARGET TOO CLOSE (${horizontalDistance.toFixed(2)} BLOCKS)</div>`;
+            warningBanner = `<div class="orange-banner">⚠️ TARGET TOO CLOSE (${horizontalDistance.toFixed(2)} BLOCKS)</div>`;
         }
 
         document.getElementById('output-panel').innerHTML = `
